@@ -28,4 +28,13 @@ abstract class _GithubStore with Store{
     fetchReposFuture = emptyResponse;
     user = userName;
   }
+
+  @action
+  Future<List<Repository>> fetchRepositories() async {
+    repositories = [];
+    final repoFuture = client.repositories.listUserRepositories(user).toList();
+    fetchReposFuture = ObservableFuture(repoFuture);
+
+    return repositories = await repoFuture;
+  }
 }
